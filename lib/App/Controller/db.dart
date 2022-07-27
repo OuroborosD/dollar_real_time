@@ -16,24 +16,25 @@ class Db_controller{
   Database? _db;
 
   Future<Database>get db async{
-    if(_db != null){
+    if(_db != null){// se o banco estiver diferente de vazio, inicia ele
       return _db!;
     }else{
-      _db = await initDb();
+      _db = await initDb();// se o banco estiver chama o initiDb
       return _db!;
     }
   }
 
   Future<Database> initDb() async{// inicializa o banco de dados
     final databasePath = await  getDatabasesPath();// pega o caminho onde está feito
-    final path = join(databasePath,'money_value.db');// nome do banco de dados
+    final path = join(databasePath,'money_value1.db');// nome do banco de dados
 
     return openDatabase(
       path, version:1,
       onCreate: (Database db, int version) async{
         await db.execute(
-           """CREATE TABLE $table(
-                id TEXT PRIMARY KEY, sigla TEXT, name TEXT, value REAL, date TEXT
+           """
+              CREATE TABLE $table(
+                id INTEGER PRIMARY KEY, sigla TEXT, name TEXT, value REAL, date TEXT
            )
            """
         );
@@ -47,21 +48,19 @@ class Db_controller{
     
   }
 
-
-
   Future<int> deleteMoney(int id) async{// o delete retorna um numero inteiro
-    Database dbTodo = await db;
-    return await dbTodo.delete(table, where: 'id = ?', whereArgs:[id]);
+    Database dbMoney = await db;
+    return await dbMoney.delete(table, where: 'id = ?', whereArgs:[id]);
   }
   
   Future<int> updateMoney(Money money) async{// o delete retorna um numero inteiro
-    Database dbTodo = await db;
-    return await dbTodo.update(table, money.toMap(), where: 'id = ?', whereArgs: [money.id]);
+    Database dbMoney = await db;
+    return await dbMoney.update(table, money.toMap(), where: 'id = ?', whereArgs: [money.id]);
   }
 
   Future<List> getAll()async{
-    Database dbTodo = await db;
-    List listMap = await dbTodo.rawQuery("SELECT * FROM $table;");// pega todas as tables
+    Database dbMoney = await db;
+    List listMap = await dbMoney.rawQuery("SELECT * FROM $table;");// pega todas as tables
     List<Money>  listTodo = [];
     for(Map m in listMap){
       listTodo.add(Money.fromMap(m));
@@ -70,18 +69,20 @@ class Db_controller{
   }
 
   Future<int?> getSize() async{
-    Database dbTodo =await db;
-    return Sqflite.firstIntValue(await dbTodo.rawQuery("SELECT COUNT(*) FROM $table"));
+    Database dbMoney =await db;
+    return Sqflite.firstIntValue(await dbMoney.rawQuery("SELECT COUNT(*) FROM $table"));
   }
 
    Future<int> deleteAll() async{
-    Database dbTodo = await db;
-    return dbTodo.rawDelete('DELETE FROM $table');
+    Database dbMoney = await db;
+    return dbMoney.rawDelete('DELETE FROM $table');
   }
 
+  
+
   Future closeDb() async{
-    Database dbTodo = await db;
-    dbTodo.close();
+    Database dbMoney = await db;
+    dbMoney.close();
   }
 
  

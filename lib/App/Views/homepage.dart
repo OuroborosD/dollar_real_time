@@ -12,7 +12,8 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomeState extends State<HomePage> {
-  db_request teste = db_request();
+  db_request data_controller = db_request();
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -20,9 +21,12 @@ class _HomeState extends State<HomePage> {
         appBar: AppBar(
           title: Text('Contação de moedas'),
           actions: [
-            IconButton(onPressed: () {
-                          teste.putData();
-          }, icon: Icon(Icons.refresh))],
+            IconButton(
+                onPressed: () {
+                  data_controller.putData();
+                },
+                icon: Icon(Icons.refresh))
+          ],
         ),
         body: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -42,18 +46,19 @@ class _HomeState extends State<HomePage> {
               child: Container(
                 padding: EdgeInsets.only(top: 30.00),
                 decoration: BoxDecoration(
-                  color: Colors.blue,
-                  borderRadius: BorderRadius.only(topRight: Radius.circular(40), topLeft: Radius.circular(40))
-                  ),
+                    color: Colors.blue,
+                    borderRadius: BorderRadius.only(
+                        topRight: Radius.circular(40),
+                        topLeft: Radius.circular(40))),
                 child: Column(
                   mainAxisSize: MainAxisSize.max,
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Flexible(
-                      child:ListView(// ====== aqui
+                      child: ListView(
+                        // ====== aqui
                         shrinkWrap: true,
                         children: [
-                         
                           Card_Moeda(),
                           Card_Moeda(),
                           Card_Moeda(),
@@ -63,7 +68,21 @@ class _HomeState extends State<HomePage> {
                     Container(
                         width: double.infinity,
                         child: ElevatedButton(
-                            onPressed: () {}, child: Text('teste')))
+                          onPressed: () {
+                            data_controller.aux_db.deleteAll().then((value) {
+                              data_controller.aux_db.getAll().then((list) {
+                                data_controller.aux_db.getSize().then((count){
+                                  print("$list tipo ${list.isEmpty} -- tamanho: $count");
+                                });
+                                
+                              });
+                            });
+                          },
+                          style:
+                              ElevatedButton.styleFrom(primary: Colors.white),
+                          child: Text('Apagar tudo',
+                              style: TextStyle(color: Colors.blue)),
+                        ))
                   ],
                 ),
               ),

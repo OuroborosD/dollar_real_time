@@ -10,7 +10,7 @@ class Money{
     id = map['id'];
     value = map['value'];
     name = map['name'];
-    date = map['date'];
+    date = DateTime.parse(map['date']);
     sigla = map['sigla'];
   }
 
@@ -30,6 +30,6 @@ class Money{
 
     @override
  String toString(){// override, para mostrar otodos os dados de forma fácil
-  return 'id: $id, tarefa: $sigla, data: $value';
+  return 'id: $id, Sigla: $sigla, price: $value ,data: $date';
  }
 }
