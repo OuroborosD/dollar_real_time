@@ -1,3 +1,4 @@
+import 'package:dollar_real_time/App/Controller/db_request.dart';
 import 'package:dollar_real_time/App/widgets/card_moeda.dart';
 import 'package:flutter/material.dart';
 
@@ -11,13 +12,17 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomeState extends State<HomePage> {
+  db_request teste = db_request();
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
           title: Text('Contação de moedas'),
-          actions: [IconButton(onPressed: () {}, icon: Icon(Icons.refresh))],
+          actions: [
+            IconButton(onPressed: () {
+                          teste.putData();
+          }, icon: Icon(Icons.refresh))],
         ),
         body: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,

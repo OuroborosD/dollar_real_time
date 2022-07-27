@@ -13,23 +13,28 @@ class _Card_MoedaState extends State<Card_Moeda> {
     return Container(
       padding: EdgeInsets.all(8),
       child: Card(
+        elevation: 10,
         child: Column(
           children: [
             Row(
               children: [
                 Expanded(
-                  flex: 2, 
-                  child: Padding(
-                    padding: const EdgeInsets.only(left: 10),
-                    child: Text('BRL',style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.blue),),
-                  )),
+                    flex: 2,
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 10),
+                      child: Text(
+                        'BRL',
+                        style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.blue),
+                      ),
+                    )),
                 Expanded(
                   // expanded
                   flex: 8,
                   child: TextField(
-                    decoration: InputDecoration(
-                     border: InputBorder.none
-                    ) ,
+                    decoration: InputDecoration(border: InputBorder.none),
                     keyboardType:
                         TextInputType.numberWithOptions(decimal: true),
                   ), // texto
